@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Anydog.ai — AI Dog Training, 24/7</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;0,9..144,700;1,9..144,400&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'DM Sans',sans-serif;background:#FDFAF5;color:#1E1508;min-height:100vh;overflow-x:hidden}
+.blob1,.blob2{position:fixed;border-radius:50%;filter:blur(90px);pointer-events:none;z-index:0}
+.blob1{width:520px;height:520px;background:#F5C97A;opacity:.2;top:-120px;right:-80px}
+.blob2{width:400px;height:400px;background:#A8C97A;opacity:.16;bottom:-60px;left:-80px}
+nav{position:relative;z-index:10;display:flex;align-items:center;justify-content:space-between;padding:1.5rem 2.5rem;max-width:1100px;margin:0 auto}
+.logo{font-family:'Fraunces',serif;font-size:1.5rem;font-weight:700;color:#1E1508;letter-spacing:-0.02em}
+.logo span{color:#C8760A}
+.logo sup{font-size:.65rem;color:#C8760A;font-family:'DM Sans',sans-serif;font-weight:500;letter-spacing:0}
+.pill{display:inline-flex;align-items:center;gap:7px;background:#FEF5E4;border:1px solid #F5D9A0;border-radius:100px;padding:5px 15px;font-size:13px;color:#9A6010;font-weight:500}
+.dot{width:7px;height:7px;border-radius:50%;background:#C8760A;animation:blink 2s infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.4}}
+main{position:relative;z-index:10;max-width:680px;margin:0 auto;padding:3rem 2rem 5rem;text-align:center}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;background:#fff;border:1px solid #EEE0C8;border-radius:100px;padding:6px 16px;font-size:13px;color:#7A5A1E;font-weight:500;margin-bottom:1.75rem;box-shadow:0 1px 4px rgba(180,120,20,.07)}
+h1{font-family:'Fraunces',serif;font-size:clamp(2.4rem,5.5vw,3.6rem);font-weight:700;line-height:1.08;letter-spacing:-0.03em;color:#120E03;margin-bottom:1.25rem}
+h1 em{font-style:italic;color:#C8760A;font-weight:300}
+.sub{font-size:1.05rem;color:#5C4A20;line-height:1.75;max-width:520px;margin:0 auto 1rem}
+.stat-row{display:flex;justify-content:center;gap:2rem;margin:1.5rem 0 2rem;flex-wrap:wrap}
+.stat{text-align:center}
+.stat-num{font-family:'Fraunces',serif;font-size:1.6rem;font-weight:700;color:#C8760A;line-height:1}
+.stat-label{font-size:12px;color:#8A7040;margin-top:3px}
+.social-proof{display:flex;flex-direction:column;align-items:center;gap:5px;margin-bottom:2rem}
+.avatars{display:flex}
+.av{width:34px;height:34px;border-radius:50%;border:2.5px solid #FDFAF5;font-size:12px;font-weight:500;display:flex;align-items:center;justify-content:center;color:#fff;margin-left:-9px}
+.av:first-child{margin-left:0}
+.av1{background:#C8760A}.av2{background:#5B9E6F}.av3{background:#4A7CC7}.av4{background:#A86BAD}.av5{background:#C9873D}
+.sp-text{font-size:13px;color:#7A5A1E}
+.form-wrap{display:flex;gap:8px;max-width:480px;margin:0 auto 1rem;background:#fff;border:1.5px solid #EEE0C8;border-radius:100px;padding:6px 6px 6px 20px;box-shadow:0 2px 16px rgba(180,120,20,.09),0 0 0 4px rgba(200,118,10,.06);transition:box-shadow .2s,border-color .2s}
+.form-wrap:focus-within{border-color:#C8760A;box-shadow:0 2px 22px rgba(180,120,20,.14),0 0 0 4px rgba(200,118,10,.12)}
+.form-wrap input{flex:1;border:none;outline:none;background:transparent;font-family:'DM Sans',sans-serif;font-size:15px;color:#1E1508;min-width:0}
+.form-wrap input::placeholder{color:#B09860}
+.btn{flex-shrink:0;background:#C8760A;color:#fff;border:none;border-radius:100px;padding:11px 22px;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:500;cursor:pointer;transition:background .15s,transform .1s;white-space:nowrap}
+.btn:hover{background:#A8610A}
+.btn:active{transform:scale(.97)}
+.btn.loading{opacity:.7;pointer-events:none}
+.microcopy{font-size:12.5px;color:#A08848;display:flex;align-items:center;justify-content:center;gap:5px}
+.success{display:none;background:#EEF8E8;border:1px solid #B0D88A;border-radius:100px;padding:11px 24px;color:#3A6E1A;font-size:14px;font-weight:500;max-width:480px;margin:0 auto;align-items:center;justify-content:center;gap:8px}
+.error-msg{display:none;background:#FCEBEB;border:1px solid #F09595;border-radius:100px;padding:11px 24px;color:#A32D2D;font-size:14px;max-width:480px;margin:.5rem auto 0;text-align:center}
+.section-label{font-size:12px;font-weight:500;letter-spacing:.08em;color:#B09860;text-transform:uppercase;margin:3.5rem 0 1.25rem}
+.cards{display:flex;justify-content:center;gap:1rem;flex-wrap:wrap}
+.card{background:#fff;border:1px solid #EEE0C8;border-radius:20px;padding:1.4rem 1.5rem;width:190px;text-align:center;box-shadow:0 1px 6px rgba(180,120,20,.06);transition:transform .2s,box-shadow .2s;display:flex;flex-direction:column;align-items:center;gap:9px}
+.card:hover{transform:translateY(-4px);box-shadow:0 8px 24px rgba(180,120,20,.12)}
+.card.featured{border:1.5px solid #C8760A;background:#FFFDF8}
+.icon-wrap{width:46px;height:46px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:22px}
+.o{background:#FEF5E4}.g{background:#EEF8E8}.b{background:#E8F0FE}
+.card-badge{background:#FEF5E4;color:#9A6010;font-size:11px;font-weight:500;border-radius:100px;padding:3px 10px}
+.card-title{font-size:13px;font-weight:500;color:#1E1508;line-height:1.4}
+.card-desc{font-size:12px;color:#8A7040;line-height:1.5}
+.problem{background:#fff;border:1px solid #EEE0C8;border-radius:20px;padding:1.75rem 2rem;margin-top:3.5rem;text-align:left}
+.problem-title{font-family:'Fraunces',serif;font-size:1.1rem;font-weight:600;color:#120E03;margin-bottom:1rem}
+.problem-list{list-style:none;display:flex;flex-direction:column;gap:.65rem}
+.problem-list li{font-size:13.5px;color:#5C4A20;display:flex;align-items:flex-start;gap:10px;line-height:1.5}
+.x{color:#C8760A;font-size:16px;flex-shrink:0;margin-top:1px}
+.waitlist-block{margin-top:3rem;background:#fff;border:1px solid #EEE0C8;border-radius:20px;padding:2rem 2rem 1.75rem;display:flex;flex-direction:column;align-items:center;gap:.5rem}
+.wl-num{font-family:'Fraunces',serif;font-size:3rem;font-weight:700;color:#C8760A;line-height:1;letter-spacing:-0.03em}
+.wl-label{font-size:14px;color:#5C4A20;font-weight:500}
+.wl-sub{font-size:12.5px;color:#A08848;margin-top:.25rem}
+.progress-track{width:100%;max-width:320px;height:7px;background:#EEE0C8;border-radius:100px;margin-top:1rem;overflow:hidden}
+.progress-fill{height:100%;width:0;background:#C8760A;border-radius:100px;transition:width 1.4s cubic-bezier(.4,0,.2,1)}
+.progress-label{display:flex;justify-content:space-between;width:100%;max-width:320px;font-size:11.5px;color:#A08848;margin-top:.4rem}
+footer{position:relative;z-index:10;text-align:center;padding:1.5rem;font-size:12px;color:#B09860;border-top:1px solid #EEE0C8;margin-top:4rem}
+@media(max-width:520px){
+  .form-wrap{flex-direction:column;border-radius:16px;padding:12px}
+  .btn{border-radius:12px;width:100%}
+  h1{font-size:2.2rem}
+  .cards{gap:.75rem}
+  .card{width:100%;max-width:320px}
+  .stat-row{gap:1.25rem}
+  nav{padding:1.25rem 1.25rem}
+}
+</style>
+</head>
+<body>
+<div class="blob1"></div>
+<div class="blob2"></div>
+
+<nav>
+  <!-- REPLACE with your logo image: <img src="logo.png" height="36" alt="Anydog.ai"> -->
+  <div class="logo">anydog<span>.</span><sup>ai</sup></div>
+  <div class="pill"><span class="dot"></span>Waitlist open</div>
+</nav>
+
+<main>
+  <div class="social-proof">
+    <div class="avatars">
+      <div class="av av1">TK</div>
+      <div class="av av2">SR</div>
+      <div class="av av3">ML</div>
+      <div class="av av4">JP</div>
+      <div class="av av5">+</div>
+    </div>
+    <p class="sp-text">2,400+ owners &amp; trainers already waiting</p>
+  </div>
+
+  <div class="eyebrow">🐾 AI-powered · Positive reinforcement · 24/7</div>
+
+  <h1>A dog trainer in your pocket.<br><em>Any time. Any dog.</em></h1>
+
+  <p class="sub">Professional trainers cost $100–200 per session. Conflicting YouTube advice doesn't work. Anydog.ai gives every dog owner a science-backed AI trainer — plus access to certified pros when you need them.</p>
+
+  <div class="stat-row">
+    <div class="stat"><div class="stat-num">65M</div><div class="stat-label">US dog-owning households</div></div>
+    <div class="stat"><div class="stat-num">$150</div><div class="stat-label">Avg. cost per trainer session</div></div>
+    <div class="stat"><div class="stat-num">24/7</div><div class="stat-label">Your AI trainer, always on</div></div>
+  </div>
+
+  <div class="form-wrap" id="formWrap">
+    <input type="email" id="emailInput" placeholder="Enter your email address" autocomplete="email" />
+    <button class="btn" id="submitBtn" onclick="handleSubmit()">Get early access</button>
+  </div>
+  <div class="success" id="successMsg">🐶 &nbsp;You're on the list! We'll be in touch soon.</div>
+  <div class="error-msg" id="errorMsg">Something went wrong — please try again.</div>
+  <p class="microcopy">🔒 No spam. Just your launch invite when we're ready.</p>
+
+  <p class="section-label">What you get</p>
+
+  <div class="cards">
+    <div class="card featured">
+      <div class="icon-wrap o">🤖</div>
+      <div class="card-badge">Core feature</div>
+      <div class="card-title">AI Dog Trainer</div>
+      <div class="card-desc">Describe your dog's breed, age &amp; problem. Get a personalized daily training plan instantly.</div>
+    </div>
+    <div class="card">
+      <div class="icon-wrap b">🧑‍🏫</div>
+      <div class="card-title">Trainer Marketplace</div>
+      <div class="card-desc">Find, vet &amp; book certified local trainers. Read reviews, message directly, pay in-app.</div>
+    </div>
+    <div class="card">
+      <div class="icon-wrap g">📈</div>
+      <div class="card-title">Progress Tracking</div>
+      <div class="card-desc">Log sessions, track milestones, and stay accountable between sessions.</div>
+    </div>
+  </div>
+
+  <div class="problem">
+    <p class="problem-title">Sound familiar?</p>
+    <ul class="problem-list">
+      <li><span class="x">✕</span>Scrolling Reddit and YouTube for training advice that never quite works</li>
+      <li><span class="x">✕</span>Professional trainers you can't afford — $100 to $200 every single session</li>
+      <li><span class="x">✕</span>No way to track what's actually working between sessions</li>
+      <li><span class="x">✕</span>No trusted place to find and book a vetted trainer near you</li>
+    </ul>
+  </div>
+
+  <div class="waitlist-block">
+    <div class="wl-num" id="counter">0</div>
+    <div class="wl-label">people on the waitlist</div>
+    <div class="wl-sub">Spots are limited for early access — be first when we launch.</div>
+    <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+    <div class="progress-label"><span>0</span><span>🎯 Goal: 5,000</span></div>
+  </div>
+</main>
+
+<footer>© 2026 Anydog.ai — Training built on love, backed by science.</footer>
+
+<script>
+  function animateCounter(target) {
+    const el = document.getElementById('counter');
+    const fill = document.getElementById('progressFill');
+    const pct = Math.min((target / 5000) * 100, 100).toFixed(1);
+    fill.style.width = pct + '%';
+    let start = null;
+    const duration = 1400;
+    const step = ts => {
+      if (!start) start = ts;
+      const p = Math.min((ts - start) / duration, 1);
+      el.textContent = Math.floor(p * target).toLocaleString();
+      if (p < 1) requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+  }
+  animateCounter(2400);
+
+  async function handleSubmit() {
+    const input = document.getElementById('emailInput');
+    const btn = document.getElementById('submitBtn');
+    const form = document.getElementById('formWrap');
+    const successMsg = document.getElementById('successMsg');
+    const errorMsg = document.getElementById('errorMsg');
+    const email = input.value.trim();
+
+    if (!email || !email.includes('@')) {
+      input.style.outline = '2px solid #E24B4A';
+      input.focus();
+      setTimeout(() => input.style.outline = '', 1600);
+      return;
+    }
+
+    btn.classList.add('loading');
+    btn.textContent = 'Saving your spot…';
+    errorMsg.style.display = 'none';
+
+    try {
+      const res = await fetch('/api/subscribe', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email })
+      });
+      const data = await res.json();
+      if (data.success) {
+        form.style.display = 'none';
+        successMsg.style.display = 'flex';
+        animateCounter(2401);
+      } else {
+        throw new Error(data.error);
+      }
+    } catch (err) {
+      btn.classList.remove('loading');
+      btn.textContent = 'Get early access';
+      errorMsg.style.display = 'block';
+    }
+  }
+
+  document.getElementById('emailInput').addEventListener('keydown', e => {
+    if (e.key === 'Enter') handleSubmit();
+  });
+</script>
+</body>
+</html>
