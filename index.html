@@ -219,18 +219,19 @@ footer{position:relative;z-index:10;text-align:center;padding:1.5rem;font-size:1
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email })
     })
-    .then(r => {
-      if (!r.ok) throw new Error('API error');
+    .then(r => r.json().then(data => ({ ok: r.ok, data })))
+    .then(({ ok, data }) => {
+      if (!ok) throw new Error(JSON.stringify(data));
       form.style.display = 'none';
       msg.style.display = 'flex';
       const current = parseInt(document.getElementById('counter').textContent.replace(/,/g, '')) || 2400;
       animateCounter(current + 1);
     })
-    .catch(() => {
+    .catch(err => {
       btn.classList.remove('loading');
       btn.textContent = 'Join Waitlist';
       input.style.outline = '2px solid #E24B4A';
-      alert('Something went wrong — please try again.');
+      alert('DEBUG: ' + err.message);
     });
   }
 
