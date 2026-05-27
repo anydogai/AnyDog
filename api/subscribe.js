@@ -12,20 +12,27 @@ module.exports = async function handler(req, res) {
   }
 
   const apiKey = process.env.BREVO_API_KEY;
-  if (!apiKey) return res.status(500).json({ error: 'BREVO_API_KEY not set' });
+  if (!apiKey) return res.status(500).json({ error: 'Server config error' });
 
-  const brevoRes = await fetch('https://api.brevo.com/v3/contacts', {
-    method: 'POST',
-    headers: {
-      'accept': 'application/json',
-      'content-type': 'application/json',
-      'api-key': apiKey,
-    },
-    body: JSON.stringify({ email, updateEnabled: true }),
-  });
+  try {
+    const brevoRes = await fetch('https://api.brevo.com/v3/contacts', {
+      method: 'POST',
+      headers: {
+        'accept': 'application/json',
+        'content-type': 'application/json',
+        'api-key': apiKey,
+      },
+      body: JSON.stringify({ email, updateEnabled: true }),
+    });
 
-  const body = await brevoRes.text();
+    if (brevoRes.status === 201 || brevoRes.status === 204) {
+      return res.status(200).json({ success: true });
+    }
 
-  // Pass the raw Brevo response back so we can debug it
-  return res.status(brevoRes.status).send(body);
+    const text = await brevoRes.text();
+    throw new Error(`Brevo ${brevoRes.status}: ${text}`);
+  } catch (err) {
+    console.error('Subscribe error:', err.message);
+    return res.status(500).json({ error: 'Could not save email, please try again' });
+  }
 };
